@@ -4,10 +4,17 @@ from scrapy.loader import ItemLoader
 from datetime import datetime
 
 class LotSpider(scrapy.Spider):
-    name = 'lot'
-    start_urls = ['https://wcn.pl/eauctions/%d' %(n+7) for n in range(210701, 211125)]
+    name = 'lot' 
+    start_urls = ['https://wcn.pl/eauctions?older=1']
+    #item = WcnauctionsItem()
 
-    def parse(self, response):
+    def parse(self, response): # main page
+        for auction in response.css('div.eauction-inactive'):
+            auctionNumber = auction.css('a.nicer::text').get()
+            #auctions.append(auctionNumber)
+            yield scrapy.Request('https://wcn.pl/eauctions/{}'.format(auctionNumber), self.parse2)
+
+    def parse2(self, response):
         #item = WcnauctionsItem()
         for lot in response.css('table.items tbody > tr'):
             l = ItemLoader(item = WcnauctionsItem(), selector=lot)
@@ -42,5 +49,7 @@ class LotSpider(scrapy.Spider):
             yield l.load_item()
 
         next_page = response.css("#content .pagination a[rel='next']").attrib['href']
-        if next_page is not None:
-            yield response.follow(next_page, callback=self.parse)
+        if next_page is None: 
+            yield scrapy.Request(self.parse) # if there is NOT next_page go to parse(1) and scrap next auction
+        else:
+            yield response.follow(next_page, callback=self.parse2) # if there is next_page go to parse(2) and scrap pages in current auction
