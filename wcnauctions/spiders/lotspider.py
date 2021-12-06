@@ -6,14 +6,14 @@ from datetime import datetime
 auctions            = []
 
 # init empty tab for plots purpose
-coinName_arr        = []
-coinCat_arr         = []
-condition_arr       = []
-price_arr           = []
-est_price_arr       = []
-bids_arr            = []
-views_arr           = []
-auctionEnd_d_arr    = []
+# coinName_arr        = []
+# coinCat_arr         = []
+# condition_arr       = []
+# price_arr           = []
+# est_price_arr       = []
+# bids_arr            = []
+# views_arr           = []
+# auctionEnd_d_arr    = []
 
 class LotSpider(scrapy.Spider):
     name = 'lot' 
@@ -65,27 +65,27 @@ class LotSpider(scrapy.Spider):
             yield l.load_item()
             
             # data for plots purpose
-            coinName_arr.append(coinName)
+            # coinName_arr.append(coinName)
             
-            coinCat_arr.append(coinCat)
+            # coinCat_arr.append(coinCat)
           
-            condition = l.get_collected_values('condition')
-            condition_arr.append(condition)
+            # condition = l.get_collected_values('condition')
+            # condition_arr.append(condition)
             
-            price = l.get_collected_values('price')
-            price_arr.append(price)
+            # price = l.get_collected_values('price')
+            # price_arr.append(price)
             
-            est_price = l.get_collected_values('est_price')
-            est_price_arr.append(est_price)
+            # est_price = l.get_collected_values('est_price')
+            # est_price_arr.append(est_price)
             
-            bids = l.get_collected_values('bids')
-            bids_arr.append(bids)
+            # bids = l.get_collected_values('bids')
+            # bids_arr.append(bids)
             
-            views = l.get_collected_values('views')
-            views_arr.append(views)
+            # views = l.get_collected_values('views')
+            # views_arr.append(views)
             
-            auctionEnd_d = l.get_collected_values('auctionEnd_d')
-            auctionEnd_d_arr.append(auctionEnd_d)
+            # auctionEnd_d = l.get_collected_values('auctionEnd_d')
+            # auctionEnd_d_arr.append(auctionEnd_d)
             
             #print(coinName_arr)
             #print(coinCat_arr)
