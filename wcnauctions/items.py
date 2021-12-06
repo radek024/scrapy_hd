@@ -9,7 +9,7 @@ from itemloaders.processors import TakeFirst, MapCompose
 from w3lib.html import remove_tags
 
 def remove_text(value):
-    args = ['szac.', 'zł', 'wyświetleń', '\n', '\t']
+    args = ['zł', 'wyświetleń', '\n', '\t']
     for arg in args:
         if(value.find(arg)>0):
             value = value.replace(arg,'').strip()
@@ -20,6 +20,12 @@ def remove_notSell(value):
 
 def removeStart_notSell(value):
     return value.replace('start','').strip()    
+
+def removeSzac_notSell(value):
+    return value.replace('szac.','').strip()
+    
+def removeEmptySpace_notSell(value):
+    return value.replace(' ','').strip()   
 
 
 
@@ -34,4 +40,6 @@ class WcnauctionsItem(scrapy.Item):
     views = scrapy.Field(input_processor = MapCompose(remove_tags, remove_text), output_processor = TakeFirst())
     photoUrl = scrapy.Field()
     link = scrapy.Field()
+    spider_dt = scrapy.Field()
+    state = scrapy.Field(input_processor = MapCompose(remove_tags, remove_text, removeEmptySpace_notSell), output_processor = TakeFirst())
     pass
