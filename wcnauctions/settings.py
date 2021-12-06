@@ -20,7 +20,7 @@ FEED_EXPORT_ENCODING = 'utf-8'
 ROBOTSTXT_OBEY = True
 
 
-FEED_EXPORT_FIELDS = ["spider_dt","name", "category", "condition", "price", "est_price", "bids", "views", "state", "photoUrl", "link"]
+FEED_EXPORT_FIELDS = ["spider_dt","auctionEnd_d","name", "category", "condition", "price", "est_price", "bids", "views", "state", "photoUrl", "link"]
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 

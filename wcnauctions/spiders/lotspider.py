@@ -16,6 +16,9 @@ class LotSpider(scrapy.Spider):
 
     def parse2(self, response):
         #item = WcnauctionsItem()
+        auction_d = response.css('div.eauction-status::text').getall()
+        #auctionStart_dt = auction_dt[0]
+        auctionEnd_d = auction_d[1]
         for lot in response.css('table.items tbody > tr'):
             l = ItemLoader(item = WcnauctionsItem(), selector=lot)
 
@@ -45,6 +48,8 @@ class LotSpider(scrapy.Spider):
 
             fullUrl = lot.css('td:nth-child(2) a::attr(href)').get()
             l.add_value('link', 'https://wcn.pl'+fullUrl)
+            
+            l.add_value('auctionEnd_d', auctionEnd_d)
 
             yield l.load_item()
 
