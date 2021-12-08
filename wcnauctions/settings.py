@@ -11,7 +11,7 @@ BOT_NAME = 'wcnauctions'
 
 SPIDER_MODULES = ['wcnauctions.spiders']
 NEWSPIDER_MODULE = 'wcnauctions.spiders'
-
+FEED_EXPORT_ENCODING = 'utf-8'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'wcnauctions (+http://www.yourdomain.com)'
@@ -20,7 +20,7 @@ NEWSPIDER_MODULE = 'wcnauctions.spiders'
 ROBOTSTXT_OBEY = True
 
 
-FEED_EXPORT_FIELDS = ["name", "category", "condition", "price", "est_price", "bids", "views", "photoUrl", "link"]
+FEED_EXPORT_FIELDS = ["spider_dt","auctionEnd_d","name", "category", "condition", "price", "est_price", "bids", "views", "state", "photoUrl", "link"]
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
