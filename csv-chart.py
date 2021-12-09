@@ -57,4 +57,4 @@ ax.grid(True)
 cb = fig.colorbar(chart1 , ax=ax)
 cb.set_label('binds')
 
-plt.show()
+plt.savefig('char1.png')
