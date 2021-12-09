@@ -45,7 +45,7 @@ class LotSpider(scrapy.Spider):
             l.add_value('category', coinCat)
             
             l.add_css('condition', 'td:nth-child(3)::text')
-            coinPrice = l.add_css('price', 'td:nth-child(4) p:first-child::text')
+            l.add_css('price', 'td:nth-child(4) p:first-child::text')
             l.add_css('est_price', 'td:nth-child(4) p:nth-child(2)::text')
             l.add_css('bids', 'td:nth-child(5)::text')
             l.add_css('views', 'td:nth-child(4) p:last-child::text')
