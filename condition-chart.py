@@ -3,6 +3,9 @@ import csv
 import matplotlib.pyplot as plt
 import numpy as np
 
+chartFilename = input("Podaj nazwę pliku do ktorego bedzie zapisany wykres [chart]: ")
+if(not(len(chartFilename))):
+    chartFilename = "chart"
 
 def condToNumber(tmpCond):
     tmpCond = tmpCond.split("/")[0]
@@ -76,20 +79,6 @@ def calculatePrecision(val1, val2):
 # col 10: photoUrl
 # col 11: link
 
-# creating empty lists
-coinName_arr = []
-coinCat_arr = []
-condition_arr = []
-price_diff = []
-est_price_arr = []
-bids_arr = []
-views_arr = []
-auctionEnd_d_arr = []
-
-price_acc = []
-
-# fig, ax = plt.subplots()
-
 coinCondPrices = {
     1: [],
     1.25: [],
@@ -107,7 +96,6 @@ coinCondPrices = {
     5.25: [],
 }
 
-# open the csv_file in read mode
 with open("lot.csv", "r", encoding="utf8") as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=",")
     x = 0
@@ -128,21 +116,20 @@ with open("lot.csv", "r", encoding="utf8") as csv_file:
         avgPriceDiff = 0
             
         if len(coinCondPrices[key]) != 0:
-            #print("dla ", key, ": ", len(coinCondPrices[key]), ", suma: ", sum(coinCondPrices[key]), " avg: ", sum(coinCondPrices[key])/len(coinCondPrices[key]))
             avgPriceDiff = sum(coinCondPrices[key]) / len(coinCondPrices[key])
             avgCoinEst[key] = avgPriceDiff
 
 
         print("dla ", key, ": ", len(coinCondPrices[key]), ", suma: ", sum(coinCondPrices[key]))
 
-
-# plot
-# print(list(coinCondPrices.keys())) # klucze na oś X
-
-
 print(list(avgCoinEst.keys()))
 print(list(avgCoinEst.values()))
 
 plt.plot(list(avgCoinEst.keys()),list(avgCoinEst.values()))
-plt.savefig('char2.png')
-# print(sum(coinCondPrices[4.25]))
+
+plt.xlabel("Stan monety")
+plt.ylabel("Precyzja szacunkowej ceny do ostatecznej")
+plt.title("Różnica między ceną szacunkową a osteczną względem stanu monety")
+
+plt.savefig(chartFilename+'.png')
+print("Wykres zapisany do "+chartFilename+".png")
