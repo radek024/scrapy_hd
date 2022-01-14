@@ -15,8 +15,8 @@ import numpy as np
 # col 9: state
 # col 10: photoUrl
 # col 11: link
-
 # creating empty lists
+
 coinName_arr        = []
 coinCat_arr         = []
 condition_arr       = []
@@ -25,7 +25,6 @@ est_price_arr       = []
 bids_arr            = []
 views_arr           = []
 auctionEnd_d_arr    = []
-
 price_diff          = []
 
 fig, ax = plt.subplots()
@@ -46,7 +45,6 @@ with open('lot.csv', 'r', encoding="utf8") as csv_file:
 color = bids_arr
 x = price_diff
 y = views_arr
-
 
 chart1  = ax.scatter(x, y, c=color, s=color, alpha=0.7)
 ax.set_xlabel('estimate price - price (zl)')
