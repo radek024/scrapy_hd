@@ -23,12 +23,10 @@ class LotSpider(scrapy.Spider):
     def parse(self, response): # main page
         for auction in response.css('div.eauction-inactive'):
             auctionNumber = auction.css('a.nicer::text').get()
-            #auctions.append(auctionNumber)
             yield scrapy.Request('https://wcn.pl/eauctions/{}'.format(auctionNumber), self.parse2)
             
     def parse2(self, response): # auction page
         auction_d = response.css('div.eauction-status::text').getall()
-        #auctionStart_dt = auction_dt[0]
         auctionEnd_d = auction_d[1]
         for lot in response.css('table.items tbody > tr'):
             l = ItemLoader(item = WcnauctionsItem(), selector=lot)
@@ -49,10 +47,7 @@ class LotSpider(scrapy.Spider):
             l.add_css('est_price', 'td:nth-child(4) p:nth-child(2)::text')
             l.add_css('bids', 'td:nth-child(5)::text')
             l.add_css('views', 'td:nth-child(4) p:last-child::text')
-            # all auctions are "Zakonczone" so state isn't helpful 
             l.add_css('state', 'td:nth-child(6)::text')
-            #l.add_css('photoUrl', 'td:first-child a::attr(href)')
-            #l.add_css('link', 'td:nth-child(2) a::attr(href)')
 
             photoUrl = lot.css('td:nth-child(2) a::attr(href)').get()
             l.add_value('photoUrl', 'https:/'+photoUrl)
@@ -63,38 +58,6 @@ class LotSpider(scrapy.Spider):
             l.add_value('auctionEnd_d', auctionEnd_d)
 
             yield l.load_item()
-            
-            # data for plots purpose
-            # coinName_arr.append(coinName)
-            
-            # coinCat_arr.append(coinCat)
-          
-            # condition = l.get_collected_values('condition')
-            # condition_arr.append(condition)
-            
-            # price = l.get_collected_values('price')
-            # price_arr.append(price)
-            
-            # est_price = l.get_collected_values('est_price')
-            # est_price_arr.append(est_price)
-            
-            # bids = l.get_collected_values('bids')
-            # bids_arr.append(bids)
-            
-            # views = l.get_collected_values('views')
-            # views_arr.append(views)
-            
-            # auctionEnd_d = l.get_collected_values('auctionEnd_d')
-            # auctionEnd_d_arr.append(auctionEnd_d)
-            
-            #print(coinName_arr)
-            #print(coinCat_arr)
-            #print(condition_arr)
-            #print(price_arr)
-            #print(est_price_arr)
-            #print(bids_arr)
-            #print(views_arr)
-            #print(auctionEnd_d_arr)
             
         next_page = response.css("#content .pagination a[rel='next']").attrib['href']
         if next_page is None: 
