@@ -36,7 +36,7 @@ with open('lot.csv', 'r', encoding="utf8") as csv_file:
     for col in csv_reader:
         try:
             # make the data
-            price_diff.append(int(col[6]) - int(col[5]))
+            price_diff.append(float(col[6]) - float(col[5]))
             bids_arr.append(int(col[7]))
             views_arr.append(int(col[8]))
         except:
@@ -51,7 +51,7 @@ y = views_arr
 chart1  = ax.scatter(x, y, c=color, s=color, alpha=0.7)
 ax.set_xlabel('estimate price - price (zl)')
 ax.set_ylabel('views')
-ax.set_title('chart 1')
+#ax.set_title('chart 1')
 ax.grid(True)
 
 cb = fig.colorbar(chart1 , ax=ax)
