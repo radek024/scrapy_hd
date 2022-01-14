@@ -3,9 +3,13 @@ import csv
 import matplotlib.pyplot as plt
 import numpy as np
 
-chartFilename = input("Podaj nazwę pliku do ktorego bedzie zapisany wykres [chart]: ")
-if(not(len(chartFilename))):
-    chartFilename = "chart"
+chartFilenameCond = input("Podaj nazwę pliku do ktorego bedzie zapisany wykres dot. stanu monet [chartCond]: ")
+chartFilenamePrec = input("Podaj nazwę pliku do ktorego bedzie zapisany wykres dot. precyzji ceny [chartPrec]: ")
+if(not(len(chartFilenameCond))):
+    chartFilenameCond = "chartCond"
+
+if(not(len(chartFilenamePrec))):
+    chartFilenamePrec = "chartPrec"
 
 def condToNumber(tmpCond):
     tmpCond = tmpCond.split("/")[0]
@@ -112,6 +116,7 @@ with open("lot.csv", "r", encoding="utf8") as csv_file:
             pass
 
     avgCoinEst = dict()
+    coinCondCount = []
     for key in coinCondPrices:
         avgPriceDiff = 0
             
@@ -121,15 +126,26 @@ with open("lot.csv", "r", encoding="utf8") as csv_file:
 
 
         print("dla ", key, ": ", len(coinCondPrices[key]), ", suma: ", sum(coinCondPrices[key]))
+        coinCondCount.append(len(coinCondPrices[key]))
 
 print(list(avgCoinEst.keys()))
 print(list(avgCoinEst.values()))
 
-plt.plot(list(avgCoinEst.keys()),list(avgCoinEst.values()))
 
+
+plt.xlabel("Ilość monet w konkretnych stanach")
+plt.ylabel("Ilość monet")
+plt.title("Stan monety")
+
+plt.bar(list(coinCondPrices),coinCondCount)
+plt.savefig(chartFilenameCond+'.png')
+print("Wykres I zapisany do "+chartFilenameCond+".png")
+plt.close();
+
+plt.plot(list(avgCoinEst.keys()),list(avgCoinEst.values()))
 plt.xlabel("Stan monety")
 plt.ylabel("Precyzja szacunkowej ceny do ostatecznej")
 plt.title("Różnica między ceną szacunkową a osteczną względem stanu monety")
 
-plt.savefig(chartFilename+'.png')
-print("Wykres zapisany do "+chartFilename+".png")
+plt.savefig(chartFilenamePrec+'.png')
+print("Wykres II zapisany do "+chartFilenamePrec+".png")
